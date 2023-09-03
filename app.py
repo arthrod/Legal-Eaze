@@ -21,7 +21,8 @@ def generate(prom):
 def main():
     st.title('Generate Legal contracts with ease!!')
     prompt = st.text_input('Enter the prompt for the legal contract you want to generate please be specific')
-    generate(prompt)
+    if prompt:
+        generate(prompt)
 
 if __name__ == '__main__':
     main()
