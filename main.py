@@ -18,7 +18,16 @@ summarization = pipeline("summarization", model=summarization_model_name, tokeni
 def main():
     st.title("Advanced Legal Analysis App")
 
-    # Input contract text
+    st.sidebar.title("Navigation")
+    app_mode = st.sidebar.selectbox("Choose the mode",
+        ["Contract Analysis"])
+
+    if app_mode == "Contract Analysis":
+        contract_analysis_mode()
+
+def contract_analysis_mode():
+    st.header("Contract Analysis")
+
     contract_text = st.text_area("Paste the contract text here:")
 
     if st.button("Analyze Contract"):
@@ -35,35 +44,24 @@ def main():
         
         display_summarization(summarization_result)
 
-        
-
-# Analyze contract using NER
 def analyze_contract(contract_text):
     analyzed_entities = contract_analysis(contract_text)
     return analyzed_entities
 
-# Detect vulnerabilities using DistilBERT
 def detect_vulnerabilities(text):
     # Implement vulnerability detection logic here using the text classification model
     # For example, check for keywords or patterns indicating vulnerabilities
     
-    # Truncate the text to a maximum length
-    max_text_length = 512  # Choose a suitable maximum length
-    truncated_text = text[:max_text_length]
-    
     # Placeholder logic: Detect vulnerability if "confidential" is mentioned
-    result = vulnerability_detection(truncated_text)
+    result = vulnerability_detection(text)
     predicted_label = result[0]['label']
     
     return predicted_label == "1"
 
-
-# Summarize contract using BART
 def summarize_contract(contract_text):
     summarization_result = summarization(contract_text, max_length=150, min_length=40, do_sample=True)
     return summarization_result[0]['summary_text']
 
-# Display analyzed entities
 def display_analyzed_entities(entities):
     st.header("Analyzed Entities:")
     
@@ -71,16 +69,10 @@ def display_analyzed_entities(entities):
         entity_text = entity.get('word', entity.get('entity', 'N/A'))
         entity_label = entity.get('entity_group', entity.get('label', 'N/A'))
         
-        
 
-# Display summarized contract
 def display_summarization(summary):
     st.header("Summarized Contract:")
     st.write(summary)
-
-# Display additional features
-
-    # ... other suggested features ...
 
 if __name__ == "__main__":
     main()
