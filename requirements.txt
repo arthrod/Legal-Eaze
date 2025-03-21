@@ -1,4 +1,4 @@
-transformers==4.32.0
+transformers==4.48.0
 tensorflow
-torch==2.0.1
+torch==2.2.0
 cohere
